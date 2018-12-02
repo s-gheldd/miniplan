@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="update_freq_options">
+        <item>Jede Stunde</item>
+        <item>2 Stunden</item>
+        <item>4 Stunden</item>
+        <item>12 Stunden</item>
+        <item>Jeder Tag</item>
+        <item>Jede Woche</item>
+    </string-array>
+    <string-array name="update_freq_values">
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>12</item>
+        <item>24</item>
+        <item>168</item>
+    </string-array>
+    <string-array name="alarm_grace_options">
+        <item>5 Minuten</item>
+        <item>10 Minuten</item>
+        <item>15 Minuten</item>
+        <item>20 Minuten</item>
+        <item>25 Minuten</item>
+        <item>30 Minuten</item>
+        <item>35 Minuten</item>
+        <item>40 Minuten</item>
+        <item>45 Minuten</item>
+        <item>60 Minuten</item>
+        <item>1 Stunde 15 Minuten</item>
+        <item>1 Stunde 30 Minuten</item>
+        <item>2 Stunden</item>
+    </string-array>
+    <string-array name="alarm_grace_values">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>60</item>
+        <item>75</item>
+        <item>90</item>
+        <item>120</item>
+    </string-array>
+</resources>

@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Miniplan</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Miniplan Login</string>
+    <string name="prompt_miniplan_login">Miniplan Name</string>
+    <string name="prompt_password">Passwort</string>
+    <string name="action_sign_in">Verbinden</string>
+    <string name="action_sign_in_short">Verbinden</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+    <!-- Strings related to miniplan -->
+    <string name="title_activity_miniplan">Miniplan</string>
+    <string name="MINIPLAN_TITLE">Miniplan</string>
+
+
+    <!-- Strings related to settings -->
+    <string name="update_freq_prompt">Synchronisierungs Intervall</string>
+    <string name="alarm_prompt">Benachrichtigungen aktivieren</string>
+    <string name="alarm_grace_period">Vorher erinnern</string>
+    <string name="title_activity_settings">Miniplan Einstellungen</string>
+    <string name="all_duty_prompt">Alle Dienste anzeigen</string>
+
+    <!-- Strings related to menu items -->
+    <string name="menu_login">Login</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_update">Refresh Earthquakes</string>
+
+
+    <!-- TAGs -->
+    <string name="tag_miniplan_list_fragment">TAG_MINIPLAN_LIST_FRAGMENT</string>
+    <string name="tag_miniplan_update">TAG_MINIPLAN_UPDATE</string>
+    <string name="tag_login_successful_completed">TAG_LOGIN_SUCCESSFUL_COMPLETED</string>
+    <string name="tag_miniplan_username">TAG_MINIPLAN_USERNAME</string>
+    <string name="tag_miniplan_password">TAG_MINIPLAN_PASSWORD</string>
+    <!-- URLs -->
+    <string name="miniplan_base_url">https://www.majo-minis.de/App/Handy.php</string>
+
+    <!-- Marker Strings for parsing the CSV -->
+    <string name="csv_success">Anmeldung korrekt</string>
+    <string name="csv_begin_miniplan">Miniplandaten</string>
+    <string name="csv_begin_dates">Terminübersicht</string>
+    <string name="csv_error"> Error: Login</string>
+
+    <!-- Preferences keys -->
+    <string name="pref_enable_alarm">PREF_ENABLE_ALARM</string>
+    <string name="pref_update_freq">PREF_UPDATE_FREQ</string>
+    <string name="pref_alarm_grace">PREF_ALARM_GRACE</string>
+    <string name="pref_show_all_duty">PREF_SHOW_ALL_DUTY</string>
+
+    <!-- Strings related to notifications -->
+    <string name="notification_channel_name">Gottesdienst Benachrichtigungen</string>
+    <string name="notification_title">Du musst los!</string>
+    <string name="notifaction_text_seperator">\u0020Uhr,\u0020</string>
+</resources>

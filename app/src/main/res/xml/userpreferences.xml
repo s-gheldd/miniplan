@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_show_all_duty"
+        android:summary="Auswählen um die Dienste aller Minis anzuzeigen"
+        android:title="@string/all_duty_prompt" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_enable_alarm"
+        android:summary="Auswählen um die automatische Erinnerung zu aktivieren"
+        android:title="@string/alarm_prompt" />
+
+    <ListPreference
+        android:defaultValue="24"
+        android:dialogTitle="Synchronisierungs Intervall"
+        android:entries="@array/update_freq_options"
+        android:entryValues="@array/update_freq_values"
+        android:key="@string/pref_update_freq"
+        android:summary="Zeit zwischen automatisierten Updates des Miniplans"
+        android:title="@string/update_freq_prompt" />
+
+    <ListPreference
+        android:defaultValue="15"
+        android:dialogTitle="Vorher benachrichtigen"
+        android:entries="@array/alarm_grace_options"
+        android:entryValues="@array/alarm_grace_values"
+        android:key="@string/pref_alarm_grace"
+        android:summary="Zeit zwischen Benachrichtigung und Gottesdienstbeginn"
+        android:title="@string/alarm_grace_period" />
+</PreferenceScreen>
