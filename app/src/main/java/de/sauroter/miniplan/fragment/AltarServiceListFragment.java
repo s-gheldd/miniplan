@@ -21,8 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.sauroter.miniplan.activity.SettingsActivity;
-import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.data.AltarService;
+import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
 import de.sauroter.miniplan.view.AltarServiceRecyclerViewAdapter;
 
@@ -154,8 +154,12 @@ public class AltarServiceListFragment extends Fragment implements SharedPreferen
     }
 
     private void updateFromPreferences() {
-        SharedPreferences prefs =
-                PreferenceManager.getDefaultSharedPreferences(getContext());
-        mShowAll = prefs.getBoolean(SettingsActivity.PREF_SHOW_ALL_DUTY, false);
+        final Context context = getContext();
+
+        if (context != null) {
+            SharedPreferences prefs =
+                    PreferenceManager.getDefaultSharedPreferences(context);
+            mShowAll = prefs.getBoolean(SettingsActivity.PREF_SHOW_ALL_DUTY, false);
+        }
     }
 }

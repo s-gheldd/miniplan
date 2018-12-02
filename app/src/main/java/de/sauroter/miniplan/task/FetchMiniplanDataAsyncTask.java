@@ -106,7 +106,7 @@ public class FetchMiniplanDataAsyncTask extends AsyncTask<Void, Void, List<Altar
         }
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(application);
-        final boolean alarmEnabled = prefs.getBoolean(SettingsActivity.PREF_ENABLE_ALARM, false);
+        final boolean alarmEnabled = prefs.getBoolean(SettingsActivity.PREF_ENABLE_ALARM, true);
         if (alarmEnabled) {
             final String grace = prefs.getString(SettingsActivity.PREF_ALARM_GRACE, "15");
             final int gracePeriod = Integer.parseInt(grace);

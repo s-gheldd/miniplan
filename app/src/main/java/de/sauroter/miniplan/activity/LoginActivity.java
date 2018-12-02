@@ -1,8 +1,7 @@
 package de.sauroter.miniplan.activity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -42,8 +41,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindString(R.string.tag_miniplan_password)
     String tagPassword;
 
-    private boolean loginSuccessful = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,20 +65,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, "Button", Toast.LENGTH_LONG).show();
     }
 
+    @SuppressLint("StaticFieldLeak")
     void login() {
-
-        final AsyncTask<Uri, Integer, CheckUserCredentialsTask.Response> execute = new CheckUserCredentialsTask(_progress_bar).execute((Uri) null);
-
-        loginSuccessful = true;
         final String username = mUsernameEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
 
 
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final SharedPreferences.Editor preferenceEdit = preferences.edit();
-        preferenceEdit.putBoolean(tagLoginSuccessfulCompleted, loginSuccessful);
-        preferenceEdit.putString(tagUsername,username);
-        preferenceEdit.putString(tagPassword,password);
-        preferenceEdit.apply();
+        final CheckUserCredentialsTask checkUserCredentialsTask = new CheckUserCredentialsTask(username, password, getApplication()) {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                _progress_bar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            protected void onPostExecute(final Boolean success) {
+                super.onPostExecute(success);
+                _progress_bar.setVisibility(View.GONE);
+
+                if (success) {
+                    final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    final SharedPreferences.Editor preferenceEdit = preferences.edit();
+                    preferenceEdit.putBoolean(tagLoginSuccessfulCompleted, success);
+                    preferenceEdit.putString(tagUsername, username);
+                    preferenceEdit.putString(tagPassword, password);
+                    preferenceEdit.apply();
+                }
+            }
+        };
+        checkUserCredentialsTask.execute();
     }
 }
