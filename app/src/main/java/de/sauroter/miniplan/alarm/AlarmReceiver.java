@@ -3,16 +3,18 @@ package de.sauroter.miniplan.alarm;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import de.sauroter.miniplan.miniplan.BuildConfig;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.util.AlarmUtil;
 
@@ -77,18 +80,28 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         builder.setSmallIcon(R.drawable.ic_stat_miniplanthumbnail);
         if (largeIcon == null) {
-            largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_miniplanthumbnail);
+            largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.minilogo_wei_);
         }
         builder.setLargeIcon(largeIcon);
 
         builder.setContentTitle(context.getString(R.string.notification_title))
                 .setContentText(dateFormat.format(date) + context.getString(R.string.notifaction_text_seperator) + place)
                 .setAutoCancel(false)
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
+
+        Intent launchIntent = context.getPackageManager()
+                .getLaunchIntentForPackage(context.getPackageName());
+        PendingIntent contentIntent = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(launchIntent)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
 
         return builder.build();
     }
 
+    /**
+     * @param gracePeriod grace period between alarm and event in milliseconds.
+     */
     public static void setAlarmForNotification(final int gracePeriod,
                                                @NonNull final Date date,
                                                @NonNull final String place,
@@ -100,7 +113,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.MINUTE, gracePeriod);
+        calendar.add(Calendar.MILLISECOND, -gracePeriod);
 
         AlarmUtil.addAlarm(context, intent, Objects.hash(date, place), calendar);
     }
@@ -111,12 +124,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                                                   @NonNull final Context context) {
 
         final Intent intent = new Intent(context, AlarmReceiver.class);
-
-
         intent.putExtra(TIME, date);
         intent.putExtra(PLACE, place);
 
-        System.out.println(AlarmUtil.hasAlarm(context, intent, Objects.hash(date, place)));
-        AlarmUtil.cancelAlarm(context, intent, Objects.hash(date, place));
+        final int id = Objects.hash(date, place);
+        final boolean before = AlarmUtil.hasAlarm(context, intent, id);
+        Log.d(AlarmReceiver.class.getName(), "Alarm canceled for " + date + " place " + place + "    " + before);
+        AlarmUtil.cancelAlarm(context, intent, id);
+        if (BuildConfig.DEBUG && before && AlarmUtil.hasAlarm(context, intent, id)) {
+            throw new AssertionError();
+        }
     }
 }

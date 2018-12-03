@@ -40,7 +40,7 @@ public class UpdatePendingAlarmsAsyncTask extends AsyncTask<Void, Void, Void> {
 
         if (alarmsEnabled) {
             for (final AltarService altarService : altarServices) {
-                AlarmReceiver.setAlarmForNotification(gracePeriod, altarService.getDate(), altarService.getPlace(), applicationContext);
+                AlarmReceiver.setAlarmForNotification(gracePeriod * 1000 * 60, altarService.getDate(), altarService.getPlace(), applicationContext);
             }
         }
         return null;

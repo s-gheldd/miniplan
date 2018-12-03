@@ -4,4 +4,5 @@
     <color name="primaryLightColor">#534bae</color>
     <color name="primaryDarkColor">#000051</color>
     <color name="primaryTextColor">@android:color/black</color>
+    <color name="flame_red">#FFE52357</color>
 </resources>

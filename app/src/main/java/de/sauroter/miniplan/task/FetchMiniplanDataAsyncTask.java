@@ -122,7 +122,7 @@ public class FetchMiniplanDataAsyncTask extends AsyncTask<Void, Void, List<Altar
 
                     final AltarService byDateAndPlace = altarServiceDAO.findByDateAndPlace(date, place);
                     if (byDateAndPlace == null) {
-                        AlarmReceiver.setAlarmForNotification(gracePeriod, date, place, application.getApplicationContext());
+                        AlarmReceiver.setAlarmForNotification(gracePeriod * 1000 * 60, date, place, application.getApplicationContext());
                     }
                 }
             }
