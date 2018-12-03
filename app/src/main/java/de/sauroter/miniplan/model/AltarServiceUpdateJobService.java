@@ -6,13 +6,13 @@ import android.app.job.JobService;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.List;
 
 import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.task.FetchMiniplanDataAsyncTask;
+import timber.log.Timber;
 
 public class AltarServiceUpdateJobService extends JobService {
     public static int ID = 1;
@@ -29,7 +29,7 @@ public class AltarServiceUpdateJobService extends JobService {
         final String password = prefs.getString(getResources().getString(R.string.tag_miniplan_password), "");
 
         if (userName.isEmpty() || password.isEmpty()) {
-            Log.e(AltarServiceUpdateJobService.class.getName(), "Could not run AltarServiceUpdateJobService because of missing credentials");
+            Timber.e("Could not run AltarServiceUpdateJobService because of missing credentials");
             return true;
         }
 
@@ -37,7 +37,7 @@ public class AltarServiceUpdateJobService extends JobService {
             @Override
             protected void onPostExecute(@Nullable final List<AltarService> altarServices) {
                 super.onPostExecute(altarServices);
-                Log.d(AltarServiceUpdateJobService.class.getName(), "AltarServiceUpdateJobService ran");
+                Timber.d("AltarServiceUpdateJobService ran");
 
                 if (altarServices == null || altarServices.isEmpty()) {
                     jobFinished(params, true);

@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +25,7 @@ import java.util.Objects;
 import de.sauroter.miniplan.miniplan.BuildConfig;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.util.AlarmUtil;
+import timber.log.Timber;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -129,7 +129,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         final int id = Objects.hash(date, place);
         final boolean before = AlarmUtil.hasAlarm(context, intent, id);
-        Log.d(AlarmReceiver.class.getName(), "Alarm canceled for " + date + " place " + place + "    " + before);
+        Timber.d("Alarm canceled for %s place %s result %b", date, place, before);
         AlarmUtil.cancelAlarm(context, intent, id);
         if (BuildConfig.DEBUG && before && AlarmUtil.hasAlarm(context, intent, id)) {
             throw new AssertionError();

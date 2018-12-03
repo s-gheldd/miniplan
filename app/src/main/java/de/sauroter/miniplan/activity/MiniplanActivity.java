@@ -134,6 +134,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
                 final Date date = new Date(System.currentTimeMillis() + 5000);
                 final String place = "St. Gallen";
                 AlarmReceiver.setAlarmForNotification(0, date, place, this.getApplicationContext());
+                AlarmReceiver.removeAlarmForNotification(date, place, this.getApplicationContext());
                 return true;
             }
 

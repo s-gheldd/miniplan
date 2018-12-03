@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.task.UpdatePendingAlarmsAsyncTask;
+import timber.log.Timber;
 
 public class SettingsActivity extends ManageMiniplanUpdateJobActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -45,7 +45,7 @@ public class SettingsActivity extends ManageMiniplanUpdateJobActivity implements
         if (PREF_ENABLE_ALARM.equals(key) || PREF_UPDATE_FREQ.equals(key) ||
                 PREF_ALARM_GRACE.equals(key)) {
             super.manageUpdateJob();
-            Log.d(SettingsActivity.class.getName(), "changed automatic update settings");
+            Timber.d("changed automatic update settings");
         }
 
         if (PREF_ALARM_GRACE.equals(key) || PREF_ENABLE_ALARM.equals(key)) {
