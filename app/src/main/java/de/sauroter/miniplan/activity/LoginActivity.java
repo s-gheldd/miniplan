@@ -1,7 +1,10 @@
 package de.sauroter.miniplan.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -60,15 +63,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         login();
-        Toast.makeText(this, "Button", Toast.LENGTH_LONG).show();
     }
 
     @SuppressLint("StaticFieldLeak")
     void login() {
         final String username = mUsernameEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
+        final Context activityContext = this;
+
+        if (username.isEmpty()) {
+            mUsernameEditText.setError(activityContext.getString(R.string.error_field_required));
+            return;
+        }
+        if (password.isEmpty()) {
+            mPasswordEditText.setError(activityContext.getString(R.string.error_field_required));
+            return;
+        }
+
+        final ConnectivityManager cm = (ConnectivityManager) activityContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        final boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if (!isConnected) {
+            _connect.setError(activityContext.getString(R.string.error_network));
+            Toast.makeText(activityContext, R.string.error_network, Toast.LENGTH_LONG).show();
+
+            return;
+        }
 
 
         final CheckUserCredentialsTask checkUserCredentialsTask = new CheckUserCredentialsTask(username, password, getApplication()) {
@@ -91,6 +115,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     preferenceEdit.putString(tagUsername, username);
                     preferenceEdit.putString(tagPassword, password);
                     preferenceEdit.apply();
+                    Toast.makeText(activityContext, R.string.toast_login_success, Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    mUsernameEditText.setError(activityContext.getString(R.string.error_invalid));
+                    mPasswordEditText.setError(activityContext.getString(R.string.error_invalid));
                 }
             }
         };
