@@ -99,6 +99,11 @@ public class FetchMiniplanDataAsyncTask extends AsyncTask<Void, Void, List<Altar
                     final AltarService altarService = CsvParser.parseAltarService(line);
                     altarServicesList.add(altarService);
                 }
+
+                if (state == ParsingState.DATES) {
+                    final List<Event> events = CsvParser.parseEventLine(line);
+                    eventsList.addAll(events);
+                }
             }
 
         } catch (final IOException e) {

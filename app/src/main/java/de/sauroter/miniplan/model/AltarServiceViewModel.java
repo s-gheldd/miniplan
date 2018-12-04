@@ -50,7 +50,7 @@ public class AltarServiceViewModel extends AndroidViewModel {
                     .altarServicesDao()
                     .loadAllAltarServices();
 
-            loadAltarServices();
+            loadMiniplanData();
         }
 
         return altarServices;
@@ -63,11 +63,13 @@ public class AltarServiceViewModel extends AndroidViewModel {
                     .getInstance(this.getApplication())
                     .eventDao()
                     .loadAllEvents();
+
+            loadMiniplanData();
         }
         return events;
     }
 
-    public void loadAltarServices() {
+    public void loadMiniplanData() {
 
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplication());

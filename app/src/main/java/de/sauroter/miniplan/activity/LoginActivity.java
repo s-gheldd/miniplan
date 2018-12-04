@@ -23,6 +23,8 @@ import de.sauroter.miniplan.task.CheckUserCredentialsTask;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final int RESULT = 1;
+
     @BindView(R.id.login_text_edit_username)
     EditText mUsernameEditText;
 
@@ -107,16 +109,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             protected void onPostExecute(final Boolean success) {
                 super.onPostExecute(success);
                 _progress_bar.setVisibility(View.GONE);
+                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                final boolean wasAuthenticated = preferences.getBoolean(tagLoginSuccessfulCompleted, false);
 
                 if (success) {
-                    final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     final SharedPreferences.Editor preferenceEdit = preferences.edit();
                     preferenceEdit.putBoolean(tagLoginSuccessfulCompleted, success);
                     preferenceEdit.putString(tagUsername, username);
                     preferenceEdit.putString(tagPassword, password);
                     preferenceEdit.apply();
                     Toast.makeText(activityContext, R.string.toast_login_success, Toast.LENGTH_LONG).show();
-                    finish();
+                    if (!wasAuthenticated) {
+                        setResult(LoginActivity.RESULT);
+                        finish();
+                    }
                 } else {
                     mUsernameEditText.setError(activityContext.getString(R.string.error_invalid));
                     mPasswordEditText.setError(activityContext.getString(R.string.error_invalid));

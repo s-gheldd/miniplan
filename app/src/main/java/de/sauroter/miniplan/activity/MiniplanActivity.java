@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -25,12 +26,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.sauroter.miniplan.alarm.AlarmReceiver;
 import de.sauroter.miniplan.fragment.AltarServiceListFragment;
+import de.sauroter.miniplan.fragment.EventListFragment;
+import de.sauroter.miniplan.miniplan.BuildConfig;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
 import de.sauroter.miniplan.view.MiniplanTabsPagerAdapter;
 
-public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements AltarServiceListFragment.OnListFragmentInteractionListener {
+public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements AltarServiceListFragment.OnListFragmentInteractionListener, EventListFragment.OnListFragmentInteractionListener {
 
+    private static final int REQUEST = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST + 1;
     private static final int MENU_LOGIN = MENU_PREFERENCES + 1;
     private static final int MENU_NOTIFICATION = MENU_LOGIN + 1;
@@ -48,10 +52,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
-    private AltarServiceListFragment mAltarServiceListFragment;
     private AltarServiceViewModel mAltarServiceViewModel;
-    private boolean activate;
-
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         mAltarServiceViewModel = ViewModelProviders.of(this).get(AltarServiceViewModel.class);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mFab.setOnClickListener(view -> updateAltarServices());
@@ -83,6 +84,14 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         }
     }
 
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MiniplanActivity.REQUEST && resultCode == LoginActivity.RESULT) {
+            this.mAltarServiceViewModel.loadMiniplanData();
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -93,7 +102,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         if (!preferences.getBoolean(tagLoginSuccessfulCompleted, false)) {
 
             final Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, MiniplanActivity.REQUEST);
         }
     }
 
@@ -108,8 +117,10 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         menu.add(0, MENU_PREFERENCES, Menu.NONE, R.string.menu_settings);
         menu.add(0, MENU_LOGIN, Menu.NONE, R.string.menu_login);
 
-        menu.add(1, MENU_NOTIFICATION, Menu.NONE, "Notification");
-        menu.add(1, MENU_ALARM, Menu.NONE, "Alarm");
+        if (BuildConfig.DEBUG) {
+            menu.add(1, MENU_NOTIFICATION, Menu.NONE, "Notification");
+            menu.add(1, MENU_ALARM, Menu.NONE, "Alarm");
+        }
         return true;
     }
 
@@ -128,6 +139,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
                 this.startActivity(intent);
                 return true;
             }
+
             case MENU_NOTIFICATION: {
                 AlarmReceiver.sendNotification(new Date(), "St. Georg", this);
                 return true;
@@ -145,6 +157,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
     }
 
     private void updateAltarServices() {
-        this.mAltarServiceViewModel.loadAltarServices();
+        mFab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate));
+        this.mAltarServiceViewModel.loadMiniplanData();
     }
 }

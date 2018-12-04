@@ -3,10 +3,18 @@ package de.sauroter.miniplan.util;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import de.sauroter.miniplan.data.AltarService;
+import de.sauroter.miniplan.data.Event;
+import timber.log.Timber;
 
 public class CsvParser {
 
@@ -108,6 +116,40 @@ public class CsvParser {
 
             return null;
         }
+    }
+
+    private static final DateFormat eventDateFormat = new SimpleDateFormat("dd.MM HH:mm", Locale.GERMANY);
+
+    public static List<Event> parseEventLine(@NonNull final String line) {
+        eventDateFormat.setLenient(true);
+
+        final ArrayList<Event> events = new ArrayList<>();
+
+        final String[] eventStrings = line.split(";;");
+
+        final Calendar used = Calendar.getInstance(Locale.GERMANY);
+        final int year = used.get(Calendar.YEAR);
+
+        for (final String eventString : eventStrings) {
+            final String[] split = eventString.split(";");
+
+            if (split.length != 2) {
+                continue;
+            }
+
+            try {
+                final Date date = eventDateFormat.parse(split[0]);
+                used.setTime(date);
+                used.set(Calendar.YEAR, year);
+
+
+                events.add(new Event(used.getTime(), split[1]));
+            } catch (final ParseException e) {
+                Timber.d(e, "Could not parse event line %s", eventString);
+            }
+        }
+
+        return events;
     }
 
 }

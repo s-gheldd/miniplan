@@ -4,8 +4,10 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import de.sauroter.miniplan.data.AltarService;
+import de.sauroter.miniplan.data.Event;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -51,5 +53,19 @@ public class CsvParserTest {
         assertEquals(2018, calendar.get(Calendar.YEAR));
         assertEquals(19, calendar.get(Calendar.HOUR_OF_DAY));
         assertEquals(0, calendar.get(Calendar.MINUTE));
+    }
+
+    @Test
+    public void test_parse_event_line() {
+        final String line = "24.12 9:00 Uhr;Weihnachtsfrühstück und Proben für Weihnachtsgottesdienste im Anschluss;;24.12;22:00Uhr Heiligabendmesse 24:00Uhr Heiligabendmesse;;25.12 10:30 Uhr;Gottesdienst;;26.12 10:30 Uhr;Gottesdienst;;";
+
+        final List<Event> events = CsvParser.parseEventLine(line);
+
+        assertFalse(events.isEmpty());
+
+        final Event event1 = events.get(0);
+
+        assertEquals(1545638400000L, event1.getDate().getTime());
+        assertEquals("Weihnachtsfrühstück und Proben für Weihnachtsgottesdienste im Anschluss", event1.getInfo());
     }
 }

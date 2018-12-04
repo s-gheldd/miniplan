@@ -3,16 +3,24 @@ package de.sauroter.miniplan.data;
 
 import android.arch.persistence.room.Entity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.Date;
+import java.util.Objects;
 
-@Entity(primaryKeys = {"date", "place"})
+@Entity(primaryKeys = {"date"})
 public class Event {
     @NonNull
     private Date date;
 
-    @NonNull
-    private String place;
+    @Nullable
+    private String info;
+
+    public Event(@NonNull final Date date,
+                 @Nullable final String info) {
+        this.date = date;
+        this.info = info;
+    }
 
     @NonNull
     public Date getDate() {
@@ -23,12 +31,35 @@ public class Event {
         this.date = date;
     }
 
-    @NonNull
-    public String getPlace() {
-        return place;
+    @Nullable
+    public String getInfo() {
+        return info;
     }
 
-    public void setPlace(@NonNull final String place) {
-        this.place = place;
+    public void setInfo(@NonNull final String info) {
+        this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "date=" + date +
+                ", info='" + info + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Event event = (Event) o;
+        return Objects.equals(date, event.date) &&
+                Objects.equals(info, event.info);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(date, info);
     }
 }

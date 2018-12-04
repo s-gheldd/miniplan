@@ -17,7 +17,7 @@
     <string name="title_activity_miniplan">Miniplan</string>
     <string name="MINIPLAN_TITLE">Miniplan</string>
     <string name="tab_altar_service">Gottesdienste</string>
-    <string name="tab_events">Sonstiges</string>
+    <string name="tab_events">Terminübersicht</string>
 
 
     <!-- Strings related to settings -->

@@ -12,11 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/tile_margin"
+        android:paddingTop="@dimen/tile_margin"
         android:paddingRight="@dimen/tile_margin"
         android:paddingBottom="@dimen/tile_margin"
-        android:paddingTop="@dimen/tile_margin"
-        android:padding="@dimen/tile_margin"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tool:listitem="@layout/list_item_altarservice" />
+        tool:listitem="@layout/list_item_event" />
 
 </android.support.v4.widget.SwipeRefreshLayout>
