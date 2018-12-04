@@ -29,6 +29,7 @@ import de.sauroter.miniplan.data.AltarServicedatabaseAccessor;
 import de.sauroter.miniplan.data.Event;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.util.CsvParser;
+import timber.log.Timber;
 
 public class FetchMiniplanDataAsyncTask extends AsyncTask<Void, Void, List<AltarService>> {
     private final String username;
@@ -56,6 +57,9 @@ public class FetchMiniplanDataAsyncTask extends AsyncTask<Void, Void, List<Altar
         HttpURLConnection urlConnection = null;
         try {
             urlConnection = (HttpURLConnection) new URL(uri.toString()).openConnection();
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
+
             final int responseCode = urlConnection.getResponseCode();
             if (responseCode != HttpsURLConnection.HTTP_OK) {
                 return null;
@@ -97,8 +101,9 @@ public class FetchMiniplanDataAsyncTask extends AsyncTask<Void, Void, List<Altar
                 }
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (final IOException e) {
+            Timber.e(e);
+            return new ArrayList<>();
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

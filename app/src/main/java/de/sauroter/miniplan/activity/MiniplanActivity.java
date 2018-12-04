@@ -10,8 +10,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import de.sauroter.miniplan.alarm.AlarmReceiver;
 import de.sauroter.miniplan.fragment.AltarServiceListFragment;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
+import de.sauroter.miniplan.view.MiniplanTabsPagerAdapter;
 
 public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements AltarServiceListFragment.OnListFragmentInteractionListener {
 
@@ -43,6 +45,9 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
     @BindView(R.id.miniplan_reload_fab)
     FloatingActionButton mFab;
 
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+
     private AltarServiceListFragment mAltarServiceListFragment;
     private AltarServiceViewModel mAltarServiceViewModel;
     private boolean activate;
@@ -54,14 +59,11 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         setContentView(R.layout.activity_miniplan);
         ButterKnife.bind(this);
 
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        if (savedInstanceState == null) {
-            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            mAltarServiceListFragment = new AltarServiceListFragment();
-            fragmentTransaction.add(R.id.miniplan_activity_frame, mAltarServiceListFragment, tagMiniplanListFragment);
-            fragmentTransaction.commitNow();
-        } else {
-            mAltarServiceListFragment = (AltarServiceListFragment) fragmentManager.findFragmentByTag(tagMiniplanListFragment);
+        if (mViewPager != null) {
+            final PagerAdapter pagerAdapter = new MiniplanTabsPagerAdapter(getSupportFragmentManager(), this);
+            mViewPager.setAdapter(pagerAdapter);
+            final TabLayout tabLayout = findViewById(R.id.tab_layout);
+            tabLayout.setupWithViewPager(mViewPager);
         }
 
         // get the AltarServiceViewModel

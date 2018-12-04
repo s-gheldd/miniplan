@@ -32,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final String TIME = "TIME";
     public static final String PLACE = "PLACE";
     public static final String CHANNEL_ID = "ALARMS";
-    private static final DateFormat dateFormat = new SimpleDateFormat("hh:mm", Locale.GERMAN);
+    private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.GERMAN);
     @Nullable
     private static Bitmap largeIcon;
 

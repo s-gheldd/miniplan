@@ -9,12 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
-import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.data.AltarService;
+import de.sauroter.miniplan.miniplan.R;
 
 public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarServiceRecyclerViewAdapter.ViewHolder> {
+
+    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("EE dd.MM.yyyy HH:mm", Locale.GERMANY);
 
     private final List<AltarService> altarServices;
 
@@ -25,14 +29,17 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        final View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_altar_service, parent, false);
+        final View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_altarservice, parent, false);
         return new ViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        holder.setAltarService(altarServices.get(position));
-        holder.getDetailsView().setText(altarServices.get(position).toString());
+        final AltarService altarService = altarServices.get(position);
+        holder.setAltarService(altarService);
+        holder.getDateView().setText(TIME_FORMAT.format(altarService.getDate()));
+        holder.getPlaceView().setText(altarService.getPlace());
+        holder.getDetailsView().setText(altarService.getAdditionalInformation());
     }
 
     @Override
@@ -45,21 +52,24 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
         @NonNull
         private final View parentView;
         @NonNull
+        private final TextView placeView;
+        @NonNull
         private final TextView detailsView;
+        @NonNull
+        private final TextView dateView;
+
         @Nullable
         private AltarService altarService;
 
 
-        public ViewHolder(final View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             parentView = itemView;
-            detailsView = itemView.findViewById(R.id.list_item_altarservice_details);
+            dateView = (TextView) itemView.findViewById(R.id.list_item_altarservice_date);
+            detailsView = (TextView) itemView.findViewById(R.id.list_item_altarservice_details);
+            placeView = (TextView) itemView.findViewById(R.id.list_item_altarservice_place);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + detailsView.getText() + "'";
-        }
 
         public AltarService getAltarService() {
             return altarService;
@@ -68,18 +78,30 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
         public void setAltarService(final AltarService altarService) {
             this.altarService = altarService;
             if (altarService != null && !altarService.isDuty()) {
-                detailsView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.primaryLightColor));
+                parentView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.tile_background_light));
             } else {
-                detailsView.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.primaryDarkColor));
+                parentView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.tile_background_dark));
             }
         }
 
+        @NonNull
         public View getParentView() {
             return parentView;
         }
 
+        @NonNull
         public TextView getDetailsView() {
             return detailsView;
+        }
+
+        @NonNull
+        public TextView getPlaceView() {
+            return placeView;
+        }
+
+        @NonNull
+        public TextView getDateView() {
+            return dateView;
         }
     }
 }

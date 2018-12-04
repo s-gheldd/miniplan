@@ -15,6 +15,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import de.sauroter.miniplan.miniplan.R;
+import timber.log.Timber;
 
 public class CheckUserCredentialsTask extends AsyncTask<Void, Integer, Boolean> {
 
@@ -53,6 +54,9 @@ public class CheckUserCredentialsTask extends AsyncTask<Void, Integer, Boolean> 
         HttpURLConnection urlConnection = null;
         try {
             urlConnection = (HttpURLConnection) new URL(uri.toString()).openConnection();
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
+
             final int responseCode = urlConnection.getResponseCode();
             if (responseCode != HttpsURLConnection.HTTP_OK) {
                 return false;
@@ -65,7 +69,7 @@ public class CheckUserCredentialsTask extends AsyncTask<Void, Integer, Boolean> 
                 return true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.e(e);
             return false;
         } finally {
             urlConnection.disconnect();

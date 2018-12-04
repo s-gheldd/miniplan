@@ -16,6 +16,8 @@
     <!-- Strings related to miniplan -->
     <string name="title_activity_miniplan">Miniplan</string>
     <string name="MINIPLAN_TITLE">Miniplan</string>
+    <string name="tab_altar_service">Gottesdienste</string>
+    <string name="tab_events">Sonstiges</string>
 
 
     <!-- Strings related to settings -->
@@ -56,4 +58,6 @@
     <string name="notification_channel_name">Gottesdienst Benachrichtigungen</string>
     <string name="notification_title">Du musst los!</string>
     <string name="notifaction_text_seperator">\u0020Uhr,\u0020</string>
+    <string name="list_item_place">Ort:</string>
+    <string name="list_item_other">Sonstiges:</string>
 </resources>
