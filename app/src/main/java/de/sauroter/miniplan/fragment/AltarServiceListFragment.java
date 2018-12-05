@@ -148,11 +148,6 @@ public class AltarServiceListFragment extends Fragment implements SharedPreferen
         }
     }
 
-
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentRefreshRequested();
-    }
-
     private void updateFromPreferences() {
         final Context context = getContext();
 

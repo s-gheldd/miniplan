@@ -34,7 +34,7 @@ public class EventListFragment extends Fragment {
     @BindView(R.id.event_refresh)
     SwipeRefreshLayout mEventRefresh;
     private AltarServiceViewModel mAltarServiceViewModel;
-    private EventListFragment.OnListFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener mListener;
 
 
     @Override
@@ -88,7 +88,7 @@ public class EventListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = (EventListFragment.OnListFragmentInteractionListener) context;
+        mListener = (OnListFragmentInteractionListener) context;
     }
 
     @Override
@@ -116,10 +116,5 @@ public class EventListFragment extends Fragment {
         if (mListener != null) {
             mListener.onListFragmentRefreshRequested();
         }
-    }
-
-
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentRefreshRequested();
     }
 }

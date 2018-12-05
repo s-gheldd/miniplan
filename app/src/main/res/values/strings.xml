@@ -18,6 +18,8 @@
     <string name="MINIPLAN_TITLE">Miniplan</string>
     <string name="tab_altar_service">Gottesdienste</string>
     <string name="tab_events">Terminübersicht</string>
+    <string name="toast_debug_8">2 Clicks to Debug Mode</string>
+    <string name="toast_debug_9">1 Click to Debug Mode</string>
 
 
     <!-- Strings related to settings -->
@@ -60,4 +62,8 @@
     <string name="notifaction_text_seperator">\u0020Uhr,\u0020</string>
     <string name="list_item_place">Ort:</string>
     <string name="list_item_other">Sonstiges:</string>
+
+
+    <!-- Strings related to DebugActivity -->
+    <string name="title_activity_debug">Miniplan Debug</string>
 </resources>

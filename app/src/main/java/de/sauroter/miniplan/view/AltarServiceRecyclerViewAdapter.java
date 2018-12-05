@@ -22,7 +22,7 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
 
     private final List<AltarService> altarServices;
 
-    public AltarServiceRecyclerViewAdapter(final List<AltarService> altarServices) {
+    public AltarServiceRecyclerViewAdapter(@NonNull final List<AltarService> altarServices) {
         this.altarServices = altarServices;
     }
 

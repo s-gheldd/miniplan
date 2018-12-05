@@ -25,14 +25,12 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.sauroter.miniplan.alarm.AlarmReceiver;
-import de.sauroter.miniplan.fragment.AltarServiceListFragment;
-import de.sauroter.miniplan.fragment.EventListFragment;
-import de.sauroter.miniplan.miniplan.BuildConfig;
+import de.sauroter.miniplan.fragment.OnListFragmentInteractionListener;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
 import de.sauroter.miniplan.view.MiniplanTabsPagerAdapter;
 
-public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements AltarServiceListFragment.OnListFragmentInteractionListener, EventListFragment.OnListFragmentInteractionListener {
+public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements OnListFragmentInteractionListener {
 
     private static final int REQUEST = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST + 1;
@@ -53,6 +51,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
     ViewPager mViewPager;
 
     private AltarServiceViewModel mAltarServiceViewModel;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -71,8 +70,9 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         mAltarServiceViewModel = ViewModelProviders.of(this).get(AltarServiceViewModel.class);
 
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
 
         mFab.setOnClickListener(view -> updateAltarServices());
 
@@ -117,7 +117,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         menu.add(0, MENU_PREFERENCES, Menu.NONE, R.string.menu_settings);
         menu.add(0, MENU_LOGIN, Menu.NONE, R.string.menu_login);
 
-        if (BuildConfig.DEBUG) {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(SettingsActivity.PREF_DEBUG_MODE_ENABLED, false)) {
             menu.add(1, MENU_NOTIFICATION, Menu.NONE, "Notification");
             menu.add(1, MENU_ALARM, Menu.NONE, "Alarm");
         }

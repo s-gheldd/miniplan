@@ -14,6 +14,7 @@
 
     <ListPreference
         android:defaultValue="24"
+        android:dependency="@string/pref_enable_alarm"
         android:dialogTitle="Synchronisierungs Intervall"
         android:entries="@array/update_freq_options"
         android:entryValues="@array/update_freq_values"
@@ -23,10 +24,17 @@
 
     <ListPreference
         android:defaultValue="15"
+        android:dependency="@string/pref_enable_alarm"
         android:dialogTitle="Vorher benachrichtigen"
         android:entries="@array/alarm_grace_options"
         android:entryValues="@array/alarm_grace_values"
         android:key="@string/pref_alarm_grace"
         android:summary="Zeit zwischen Benachrichtigung und Gottesdienstbeginn"
         android:title="@string/alarm_grace_period" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="PREF_DEBUG_MODE_ENABLED"
+        android:summary="Enable/Disable debug mode"
+        android:title="Debug Mode" />
 </PreferenceScreen>
