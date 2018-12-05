@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/list_item_event_date"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/black"
+            android:textColor="@color/primaryDarkColor"
             android:textStyle="bold"
             tool:text="So. 24.12.2018 16:00" />
     </TableRow>

@@ -66,4 +66,9 @@
 
     <!-- Strings related to DebugActivity -->
     <string name="title_activity_debug">Miniplan Debug</string>
+    <string name="debug_action_altarservice">Debug Gottesdienst</string>
+    <string name="debug_action_alarm">Debug Alarm</string>
+    <string name="debug_action_notifiaction">Debug Notfication</string>
+    <string name="debug_prompt_delay">Verzögerung</string>
+    <string name="debug_prompt_grace">Grace</string>
 </resources>

@@ -42,4 +42,7 @@ public interface AltarServiceDAO {
     @NonNull
     @Query("SELECT * FROM altarservice WHERE duty")
     List<AltarService> loadAllDuty();
+
+    @Query("DELETE FROM altarService WHERE date < :date")
+    void deleteOlder(final Date date);
 }

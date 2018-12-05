@@ -65,9 +65,9 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             parentView = itemView;
-            dateView = (TextView) itemView.findViewById(R.id.list_item_altarservice_date);
-            detailsView = (TextView) itemView.findViewById(R.id.list_item_altarservice_details);
-            placeView = (TextView) itemView.findViewById(R.id.list_item_altarservice_place);
+            dateView = itemView.findViewById(R.id.list_item_altarservice_date);
+            detailsView = itemView.findViewById(R.id.list_item_altarservice_details);
+            placeView = itemView.findViewById(R.id.list_item_altarservice_place);
         }
 
 
@@ -75,12 +75,21 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
             return altarService;
         }
 
-        public void setAltarService(final AltarService altarService) {
+        private void setAlpha(final float alpha) {
+            parentView.setAlpha(alpha);
+            dateView.setAlpha(alpha);
+            detailsView.setAlpha(alpha);
+            placeView.setAlpha(alpha);
+        }
+
+        public void setAltarService(@Nullable final AltarService altarService) {
             this.altarService = altarService;
             if (altarService != null && !altarService.isDuty()) {
                 parentView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.tile_background_light));
+                setAlpha(0.5f);
             } else {
                 parentView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.tile_background_dark));
+                setAlpha(1f);
             }
         }
 

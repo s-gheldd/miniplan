@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/list_item_altarservice_date"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/black"
+            android:textColor="@color/primaryDarkColor"
             android:textStyle="bold"
             tool:text="So. 24.12.2018 16:00" />
     </TableRow>
@@ -30,12 +30,12 @@
         <TextView
             android:text="@string/list_item_place"
             android:textAppearance="@style/Base.TextAppearance.AppCompat"
-            android:textColor="@android:color/black" />
+            android:textColor="#333333" />
 
         <TextView
             android:id="@+id/list_item_altarservice_place"
             android:textAppearance="@style/Base.TextAppearance.AppCompat"
-            android:textColor="@android:color/black"
+            android:textColor="#333333"
             tool:text="St.Georg" />
     </TableRow>
 
@@ -48,12 +48,12 @@
         <TextView
             android:text="@string/list_item_other"
             android:textAppearance="@style/Base.TextAppearance.AppCompat"
-            android:textColor="@android:color/black" />
+            android:textColor="#333333" />
 
         <TextView
             android:id="@+id/list_item_altarservice_details"
             android:textAppearance="@style/Base.TextAppearance.AppCompat"
-            android:textColor="@android:color/black"
+            android:textColor="#333333"
             tool:text="Weihnachten" />
     </TableRow>
 

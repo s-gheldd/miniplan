@@ -11,9 +11,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
+import android.text.format.DateUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,8 +25,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import de.sauroter.miniplan.activity.SettingsActivity;
 import de.sauroter.miniplan.miniplan.BuildConfig;
 import de.sauroter.miniplan.miniplan.R;
+import de.sauroter.miniplan.task.RemovePastDatabaseEntriesTask;
 import de.sauroter.miniplan.util.AlarmUtil;
 import timber.log.Timber;
 
@@ -52,6 +57,16 @@ public class AlarmReceiver extends BroadcastReceiver {
                                         @NonNull final Context context) {
 
 
+        final Date now = new Date();
+        final String graceString = PreferenceManager.getDefaultSharedPreferences(context).getString(SettingsActivity.PREF_ALARM_GRACE, "15");
+        final int grace = Integer.parseInt(graceString) * 1000 * 60;
+
+        // if date is to long in the past, dont send notification
+        if (now.getTime() - date.getTime() > grace) {
+            return;
+        }
+
+
         final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         final Notification notification = createNotification(date, place, context);
@@ -68,6 +83,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         notificationManager.notify(Objects.hash(date, place), notification);
         removeAlarmForNotification(date, place, context.getApplicationContext());
+
+        new RemovePastDatabaseEntriesTask(context).execute(new Date(System.currentTimeMillis() - 3600000));
     }
 
 
@@ -84,8 +101,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         builder.setLargeIcon(largeIcon);
 
+
+        final Date now = new Date();
+
         builder.setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(dateFormat.format(date) + context.getString(R.string.notifaction_text_seperator) + place)
+                .setColor(ContextCompat.getColor(context, R.color.flame_red))
+                .setContentText(getRemainingTimeString(now, date))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(getRemainingTimeStringLong(now, date, place)))
                 .setAutoCancel(false)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
 
@@ -97,6 +119,41 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setContentIntent(contentIntent);
 
         return builder.build();
+    }
+
+    private static String getRemainingTimeString(final Date now, final Date date) {
+        final long hour = getHour(now, date);
+        final long minute = getMinute(now, date);
+        if (hour != 0) {
+            return String.format(Locale.GERMANY, "Gottesdienst in %d Stunden %d Minuten", hour, minute, dateFormat.format(date));
+        } else {
+            return String.format(Locale.GERMANY, "Gottesdienst in %d Minuten", minute, dateFormat.format(date));
+        }
+    }
+
+    private static String getRemainingTimeStringLong(final Date now, final Date date, final String place) {
+
+        final long hour = getHour(now, date);
+        final long minute = getMinute(now, date);
+        if (hour != 0) {
+            return String.format(Locale.GERMANY, "Gottesdienst in %d Stunden %d Minuten\n%s Uhr, %s", hour, minute, dateFormat.format(date), place);
+        } else {
+            return String.format(Locale.GERMANY, "Gottesdienst in %d Minuten\n%s Uhr, %s", minute, dateFormat.format(date), place);
+        }
+    }
+
+    static long getHour(@NonNull final Date now, @NonNull final Date date) {
+        final long dif = (date.getTime() - now.getTime());
+
+        final long hour = dif / DateUtils.HOUR_IN_MILLIS;
+        return hour < 0 ? 0 : hour;
+    }
+
+    static long getMinute(@NonNull final Date now, @NonNull final Date date) {
+        final long dif = (date.getTime() - now.getTime());
+
+        final long minute = (dif % DateUtils.HOUR_IN_MILLIS) / DateUtils.MINUTE_IN_MILLIS;
+        return minute < 0 ? 0 : minute;
     }
 
     /**

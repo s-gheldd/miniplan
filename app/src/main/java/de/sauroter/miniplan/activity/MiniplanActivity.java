@@ -24,19 +24,18 @@ import java.util.List;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.sauroter.miniplan.alarm.AlarmReceiver;
 import de.sauroter.miniplan.fragment.OnListFragmentInteractionListener;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
+import de.sauroter.miniplan.task.RemovePastDatabaseEntriesTask;
 import de.sauroter.miniplan.view.MiniplanTabsPagerAdapter;
 
-public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements OnListFragmentInteractionListener {
+public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements OnListFragmentInteractionListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final int REQUEST = 2;
     private static final int MENU_PREFERENCES = Menu.FIRST + 1;
     private static final int MENU_LOGIN = MENU_PREFERENCES + 1;
-    private static final int MENU_NOTIFICATION = MENU_LOGIN + 1;
-    private static final int MENU_ALARM = MENU_NOTIFICATION + 1;
+    private static final int MENU_DEBUG = MENU_LOGIN + 1;
 
     @BindString(R.string.tag_login_successful_completed)
     String tagLoginSuccessfulCompleted;
@@ -82,6 +81,8 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         if (allPendingJobs.isEmpty()) {
             manageUpdateJob();
         }
+
+        new RemovePastDatabaseEntriesTask(this).execute(new Date());
     }
 
     @Override
@@ -104,6 +105,8 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
             final Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent, MiniplanActivity.REQUEST);
         }
+
+        preferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -118,8 +121,8 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         menu.add(0, MENU_LOGIN, Menu.NONE, R.string.menu_login);
 
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(SettingsActivity.PREF_DEBUG_MODE_ENABLED, false)) {
-            menu.add(1, MENU_NOTIFICATION, Menu.NONE, "Notification");
-            menu.add(1, MENU_ALARM, Menu.NONE, "Alarm");
+            menu.add(1, MENU_DEBUG, Menu.NONE, "Debug");
+
         }
         return true;
     }
@@ -139,19 +142,11 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
                 this.startActivity(intent);
                 return true;
             }
-
-            case MENU_NOTIFICATION: {
-                AlarmReceiver.sendNotification(new Date(), "St. Georg", this);
+            case MENU_DEBUG: {
+                final Intent intent = new Intent(this, DebugActivity.class);
+                this.startActivity(intent);
                 return true;
             }
-            case MENU_ALARM: {
-                final Date date = new Date(System.currentTimeMillis() + 5000);
-                final String place = "St. Gallen";
-                AlarmReceiver.setAlarmForNotification(0, date, place, this.getApplicationContext());
-                AlarmReceiver.removeAlarmForNotification(date, place, this.getApplicationContext());
-                return true;
-            }
-
         }
         return false;
     }
@@ -159,5 +154,13 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
     private void updateAltarServices() {
         mFab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate));
         this.mAltarServiceViewModel.loadMiniplanData();
+    }
+
+
+    @Override
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
+        if (SettingsActivity.PREF_DEBUG_MODE_ENABLED.equals(key)) {
+            this.invalidateOptionsMenu();
+        }
     }
 }
