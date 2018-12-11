@@ -71,4 +71,5 @@
     <string name="debug_action_notifiaction">Debug Notfication</string>
     <string name="debug_prompt_delay">Verzögerung</string>
     <string name="debug_prompt_grace">Grace</string>
+    <string name="debug_action_clear">Clear DB</string>
 </resources>

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import de.sauroter.miniplan.fragment.AltarServiceListFragment;
 import de.sauroter.miniplan.fragment.EventListFragment;
 import de.sauroter.miniplan.miniplan.R;
 
-public class MiniplanTabsPagerAdapter extends FragmentStatePagerAdapter {
+public class MiniplanTabsPagerAdapter extends FragmentPagerAdapter {
 
     @NonNull
     private final SparseArray<Fragment> registeredFragments = new SparseArray<>();
@@ -70,6 +71,7 @@ public class MiniplanTabsPagerAdapter extends FragmentStatePagerAdapter {
         super.destroyItem(container, position, object);
     }
 
+    @Nullable
     public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
     }

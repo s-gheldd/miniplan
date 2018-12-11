@@ -14,11 +14,10 @@
         android:icon="@drawable/ic_miniplanthumbnail"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name="de.sauroter.miniplan.activity.MiniplanActivity"
-            android:label="@string/title_activity_miniplan"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_miniplan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,8 +26,7 @@
         <activity
             android:name="de.sauroter.miniplan.activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName="de.sauroter.miniplan.activity.MiniplanActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="de.sauroter.miniplan.activity.MiniplanActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.sauroter.miniplan.activity.MiniplanActivity" />
@@ -36,8 +34,7 @@
         <activity
             android:name="de.sauroter.miniplan.activity.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="de.sauroter.miniplan.activity.MiniplanActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="de.sauroter.miniplan.activity.MiniplanActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.sauroter.miniplan.activity.MiniplanActivity" />
@@ -48,8 +45,12 @@
         </activity>
         <activity
             android:name="de.sauroter.miniplan.activity.DebugActivity"
-            android:label="@string/title_activity_debug"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_debug">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.sauroter.miniplan.activity.MiniplanActivity" />
+        </activity>
+        <activity android:name="de.sauroter.miniplan.activity.DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.sauroter.miniplan.activity.MiniplanActivity" />

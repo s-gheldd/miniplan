@@ -49,10 +49,7 @@ public class AltarServiceViewModel extends AndroidViewModel {
                     .getInstance(this.getApplication())
                     .altarServicesDao()
                     .loadAllAltarServices();
-
-            loadMiniplanData();
         }
-
         return altarServices;
     }
 
@@ -63,8 +60,6 @@ public class AltarServiceViewModel extends AndroidViewModel {
                     .getInstance(this.getApplication())
                     .eventDao()
                     .loadAllEvents();
-
-            loadMiniplanData();
         }
         return events;
     }

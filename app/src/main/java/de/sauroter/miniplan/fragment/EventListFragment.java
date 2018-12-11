@@ -1,5 +1,6 @@
 package de.sauroter.miniplan.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
 import de.sauroter.miniplan.view.EventRecyclerViewAdapter;
 
-public class EventListFragment extends Fragment {
+public class EventListFragment extends Fragment implements Observer<List<Event>> {
 
     private final ArrayList<Event> mEvents = new ArrayList<>();
     private final EventRecyclerViewAdapter mEventViewAdapter = new EventRecyclerViewAdapter(mEvents);
@@ -57,11 +58,7 @@ public class EventListFragment extends Fragment {
         // get the AltarServiceViewModel
         mAltarServiceViewModel = ViewModelProviders.of(this.getActivity()).get(AltarServiceViewModel.class);
         // add observer
-        mAltarServiceViewModel.getEvents().observe(this, es -> {
-            if (es != null) {
-                setEvents(es);
-            }
-        });
+        mAltarServiceViewModel.getEvents().observe(this, this);
     }
 
 
@@ -97,6 +94,12 @@ public class EventListFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onChanged(@Nullable final List<Event> events) {
+        if (events != null) {
+            this.setEvents(events);
+        }
+    }
 
     private void setEvents(@NonNull final List<Event> events) {
 

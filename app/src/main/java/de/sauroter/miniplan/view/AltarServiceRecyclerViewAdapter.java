@@ -9,21 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.miniplan.R;
 
 public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarServiceRecyclerViewAdapter.ViewHolder> {
 
-    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("EE dd.MM.yyyy HH:mm", Locale.GERMANY);
-
     private final List<AltarService> altarServices;
+    private View.OnClickListener mOnItemClickListener;
 
     public AltarServiceRecyclerViewAdapter(@NonNull final List<AltarService> altarServices) {
         this.altarServices = altarServices;
+    }
+
+    public void setItemClickListener(final View.OnClickListener clickListener) {
+        mOnItemClickListener = clickListener;
     }
 
     @NonNull
@@ -37,7 +38,7 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final AltarService altarService = altarServices.get(position);
         holder.setAltarService(altarService);
-        holder.getDateView().setText(TIME_FORMAT.format(altarService.getDate()));
+        holder.getDateView().setText(altarService.formatDate());
         holder.getPlaceView().setText(altarService.getPlace());
         holder.getDetailsView().setText(altarService.getAdditionalInformation());
     }
@@ -68,6 +69,8 @@ public class AltarServiceRecyclerViewAdapter extends RecyclerView.Adapter<AltarS
             dateView = itemView.findViewById(R.id.list_item_altarservice_date);
             detailsView = itemView.findViewById(R.id.list_item_altarservice_details);
             placeView = itemView.findViewById(R.id.list_item_altarservice_place);
+            itemView.setTag(this);
+            itemView.setOnClickListener(mOnItemClickListener);
         }
 
 

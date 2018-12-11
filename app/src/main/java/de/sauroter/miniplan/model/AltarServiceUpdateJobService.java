@@ -33,16 +33,18 @@ public class AltarServiceUpdateJobService extends JobService {
             return true;
         }
 
-        fetchMiniplanDataAsyncTask = new FetchMiniplanDataAsyncTask(password, userName, getApplication()) {
+        fetchMiniplanDataAsyncTask = new FetchMiniplanDataAsyncTask(userName, password, getApplication()) {
             @Override
             protected void onPostExecute(@Nullable final List<AltarService> altarServices) {
                 super.onPostExecute(altarServices);
-                Timber.d("AltarServiceUpdateJobService ran");
 
                 if (altarServices == null || altarServices.isEmpty()) {
                     jobFinished(params, true);
+                    Timber.d("AltarServiceUpdateJobService ran reschedule");
+                    return;
                 }
                 jobFinished(params, false);
+                Timber.d("AltarServiceUpdateJobService ran success");
             }
         };
         fetchMiniplanDataAsyncTask.execute();

@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.sauroter.miniplan.activity.LoginActivity">
+    tools:context="de.sauroter.miniplan.activity.DebugActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:context="de.sauroter.miniplan.activity.DebugActivity">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="de.sauroter.miniplan.activity.LoginActivity"
+        tools:context="de.sauroter.miniplan.activity.DebugActivity"
         tools:showIn="@layout/activity_login">
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -50,8 +51,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/debug_prompt_delay"
                     android:importantForAutofill="no"
-                    android:text="0"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="0" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -66,8 +67,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/debug_prompt_grace"
                     android:importantForAutofill="no"
-                    android:text="0"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="0" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -78,6 +79,7 @@
                 android:layout_marginBottom="@dimen/text_margin"
                 android:padding="12dp"
                 android:text="@string/debug_action_notifiaction" />
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/debug_alarm"
                 android:layout_width="fill_parent"
@@ -95,6 +97,15 @@
                 android:layout_marginBottom="@dimen/text_margin"
                 android:padding="12dp"
                 android:text="@string/debug_action_altarservice" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/debug_clear"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:padding="12dp"
+                android:text="@string/debug_action_clear" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 

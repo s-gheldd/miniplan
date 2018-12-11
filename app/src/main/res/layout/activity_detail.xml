@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.sauroter.miniplan.activity.DetailActivity">
+
+    <data>
+
+        <variable
+            name="altarService"
+            type="de.sauroter.miniplan.data.AltarService" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/text_margin">
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="0,1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Datum"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="@{altarService.formatDate()}"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textStyle="bold"
+                        tools:text="So. 24.12.2018 19:00 Uhr" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Ort"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.place}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="St. Ansgar" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Sonstiges"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.additionalInformation}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="Alle Bücher mitbringen!" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Lektor"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.lector}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="Markus" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Altar"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.altarOne}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="Miria" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Altar"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.altarTwo}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="Christoph" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Leuchter"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.lightOne}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="Joseph" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Leuchter"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:text="@{altarService.lightTwo}"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textStyle="normal"
+                        tools:text="Peter" />
+                </TableRow>
+
+            </TableLayout>
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/detail_done_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

@@ -1,9 +1,6 @@
 package de.sauroter.miniplan.activity;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,19 +8,20 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.sauroter.miniplan.alarm.AlarmReceiver;
 import de.sauroter.miniplan.fragment.OnListFragmentInteractionListener;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
@@ -51,6 +49,7 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
 
     private AltarServiceViewModel mAltarServiceViewModel;
     private Toolbar mToolbar;
+    private MiniplanTabsPagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -59,8 +58,8 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         ButterKnife.bind(this);
 
         if (mViewPager != null) {
-            final PagerAdapter pagerAdapter = new MiniplanTabsPagerAdapter(getSupportFragmentManager(), this);
-            mViewPager.setAdapter(pagerAdapter);
+            mPagerAdapter = new MiniplanTabsPagerAdapter(getSupportFragmentManager(), this);
+            mViewPager.setAdapter(mPagerAdapter);
             final TabLayout tabLayout = findViewById(R.id.tab_layout);
             tabLayout.setupWithViewPager(mViewPager);
         }
@@ -76,13 +75,8 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         mFab.setOnClickListener(view -> updateAltarServices());
 
 
-        final JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        final List<JobInfo> allPendingJobs = jobScheduler.getAllPendingJobs();
-        if (allPendingJobs.isEmpty()) {
-            manageUpdateJob();
-        }
-
-        new RemovePastDatabaseEntriesTask(this).execute(new Date());
+        manageUpdateJob();
+        new RemovePastDatabaseEntriesTask(this).execute(new Date(System.currentTimeMillis() - 2 * DateUtils.HOUR_IN_MILLIS));
     }
 
     @Override
@@ -107,6 +101,19 @@ public class MiniplanActivity extends ManageMiniplanUpdateJobActivity implements
         }
 
         preferences.registerOnSharedPreferenceChangeListener(this);
+
+
+        final Intent intent = getIntent();
+        Fragment registeredFragment = mPagerAdapter.getRegisteredFragment(0);
+        if (registeredFragment == null) {
+            registeredFragment = (Fragment) mPagerAdapter.instantiateItem(mViewPager, 0);
+        }
+        final Bundle arguments = registeredFragment.getArguments();
+        if (arguments != null) {
+            arguments.putSerializable(AlarmReceiver.SCROLL_TO_DATE, intent.getSerializableExtra(AlarmReceiver.SCROLL_TO_DATE));
+        } else {
+            registeredFragment.setArguments(intent.getExtras());
+        }
     }
 
     @Override

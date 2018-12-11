@@ -21,6 +21,7 @@ import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.data.AltarServiceDAO;
 import de.sauroter.miniplan.data.AltarServicedatabaseAccessor;
 import de.sauroter.miniplan.miniplan.R;
+import de.sauroter.miniplan.task.RemovePastDatabaseEntriesTask;
 import de.sauroter.miniplan.task.UpdatePendingAlarmsAsyncTask;
 
 public class DebugActivity extends AppCompatActivity {
@@ -39,6 +40,9 @@ public class DebugActivity extends AppCompatActivity {
 
     @BindView(R.id.debug_altar_service)
     Button mAltarServiceButton;
+
+    @BindView(R.id.debug_clear)
+    Button mClearButton;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class DebugActivity extends AppCompatActivity {
         return true;
     }
 
-    @OnClick({R.id.debug_notification, R.id.debug_alarm, R.id.debug_altar_service})
+    @OnClick({R.id.debug_notification, R.id.debug_alarm, R.id.debug_altar_service, R.id.debug_clear})
     void onClick(final Button button) {
 
 
@@ -105,6 +109,8 @@ public class DebugActivity extends AppCompatActivity {
             AlarmReceiver.setAlarmForNotification(grace * 1000, new Date(date.getTime() + delay * 1000), "St. Moritz", this.getApplicationContext());
         } else if (button.equals(mAltarServiceButton)) {
             new AddDebugAltarServiceAsyncTask(delay, this.getApplicationContext()).execute();
+        } else if (button.equals(mClearButton)) {
+            new RemovePastDatabaseEntriesTask(this.getApplicationContext()).execute(new Date(Long.MAX_VALUE));
         }
     }
 

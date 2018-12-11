@@ -4,11 +4,19 @@ import android.arch.persistence.room.Entity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 @Entity(primaryKeys = {"date", "place"})
-public class AltarService {
+public class AltarService implements Serializable {
+
+    public static final Comparator<AltarService> DATE_COMPARATOR = new DateComparator();
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd.MM.yyyy HH:mm", Locale.GERMANY);
 
     @NonNull
     private Date date;
@@ -136,6 +144,11 @@ public class AltarService {
         this.duty = duty;
     }
 
+    @NonNull
+    public String formatDate() {
+        return dateFormat.format(this.date);
+    }
+
     @Override
     public String toString() {
         return "AltarService{" +
@@ -169,7 +182,27 @@ public class AltarService {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(date, place, additionalInformation, lector, lightOne, lightTwo, altarOne, altarTwo, duty);
+    }
+
+    public static AltarService dateOnlyService(final Date date) {
+        return new AltarService(date, "", null, null, null, null, null, null, false);
+    }
+
+    private static class DateComparator implements Comparator<AltarService> {
+
+        @Override
+        public int compare(final AltarService o1, final AltarService o2) {
+
+            final long dif = o1.date.getTime() - o2.date.getTime();
+
+            if (dif < 0) {
+                return -1;
+            } else if (dif == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
     }
 }

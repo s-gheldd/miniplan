@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import de.sauroter.miniplan.activity.MiniplanActivity;
 import de.sauroter.miniplan.activity.SettingsActivity;
 import de.sauroter.miniplan.miniplan.BuildConfig;
 import de.sauroter.miniplan.miniplan.R;
@@ -34,6 +35,7 @@ import timber.log.Timber;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+    public static final String SCROLL_TO_DATE = "SCROLL_TO_DATE";
     public static final String TIME = "TIME";
     public static final String PLACE = "PLACE";
     public static final String CHANNEL_ID = "ALARMS";
@@ -84,7 +86,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         notificationManager.notify(Objects.hash(date, place), notification);
         removeAlarmForNotification(date, place, context.getApplicationContext());
 
-        new RemovePastDatabaseEntriesTask(context).execute(new Date(System.currentTimeMillis() - 3600000));
+        new RemovePastDatabaseEntriesTask(context).execute(new Date(System.currentTimeMillis() - 2 * DateUtils.HOUR_IN_MILLIS));
     }
 
 
@@ -111,8 +113,10 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setAutoCancel(false)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
 
-        Intent launchIntent = context.getPackageManager()
-                .getLaunchIntentForPackage(context.getPackageName());
+        Intent launchIntent = new Intent(context, MiniplanActivity.class);
+        launchIntent.putExtra(SCROLL_TO_DATE, date);
+
+
         PendingIntent contentIntent = TaskStackBuilder.create(context)
                 .addNextIntentWithParentStack(launchIntent)
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

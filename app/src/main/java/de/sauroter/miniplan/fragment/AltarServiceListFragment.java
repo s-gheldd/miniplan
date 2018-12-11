@@ -1,7 +1,9 @@
 package de.sauroter.miniplan.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,17 +18,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.sauroter.miniplan.activity.DetailActivity;
 import de.sauroter.miniplan.activity.SettingsActivity;
+import de.sauroter.miniplan.alarm.AlarmReceiver;
 import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.model.AltarServiceViewModel;
 import de.sauroter.miniplan.view.AltarServiceRecyclerViewAdapter;
+import timber.log.Timber;
 
-public class AltarServiceListFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class AltarServiceListFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, Observer<List<AltarService>> {
 
     private final ArrayList<AltarService> mAltarServices = new ArrayList<>();
     private final AltarServiceRecyclerViewAdapter mAltarServiceViewAdapter = new AltarServiceRecyclerViewAdapter(mAltarServices);
@@ -63,11 +70,7 @@ public class AltarServiceListFragment extends Fragment implements SharedPreferen
         // get the AltarServiceViewModel
         mAltarServiceViewModel = ViewModelProviders.of(this.getActivity()).get(AltarServiceViewModel.class);
         // add observer
-        mAltarServiceViewModel.getAltarServices().observe(this, as -> {
-            if (as != null) {
-                setAltarServices(as);
-            }
-        });
+        mAltarServiceViewModel.getAltarServices().observe(this, this);
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -85,11 +88,55 @@ public class AltarServiceListFragment extends Fragment implements SharedPreferen
         this.mAltarServiceRecyclerView.setAdapter(mAltarServiceViewAdapter);
 
         this.mAltarServiceRefresh.setOnRefreshListener(this::updateAltarServices);
+        this.mAltarServiceViewAdapter.setItemClickListener(this::onItemClicked);
+    }
+
+    private void onItemClicked(final View view) {
+        final AltarServiceRecyclerViewAdapter.ViewHolder tag = (AltarServiceRecyclerViewAdapter.ViewHolder) view.getTag();
+
+        final AltarService altarService = tag.getAltarService();
+        final Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra(DetailActivity.DETAIL_ALTAR_SERVICE, altarService);
+        startActivity(intent);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onPause() {
+        super.onPause();
+
+        if (getArguments() != null) {
+            getArguments().remove(AlarmReceiver.SCROLL_TO_DATE);
+        }
+    }
+
+    // every Conext for this Fragment must implement OnListFragmentInteractionListener
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (OnListFragmentInteractionListener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void onChanged(@Nullable final List<AltarService> altarServices) {
+        if (altarServices != null) {
+            setAltarServices(altarServices);
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
+        if (SettingsActivity.PREF_SHOW_ALL_DUTY.equals(key)) {
+            final List<AltarService> altarServices = mAltarServiceViewModel.getAltarServices().getValue();
+            if (altarServices != null) {
+                this.setAltarServices(altarServices);
+            }
+        }
     }
 
     public void setAltarServices(@NonNull final List<AltarService> altarServices) {
@@ -115,29 +162,12 @@ public class AltarServiceListFragment extends Fragment implements SharedPreferen
             }
 
         this.mAltarServiceRefresh.setRefreshing(false);
-    }
 
-
-    // every Conext for this Fragment must implement OnListFragmentInteractionListener
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mListener = (OnListFragmentInteractionListener) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    @Override
-    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
-        if (SettingsActivity.PREF_SHOW_ALL_DUTY.equals(key)) {
-            final List<AltarService> altarServices = mAltarServiceViewModel.getAltarServices().getValue();
-            if (altarServices != null) {
-                this.setAltarServices(altarServices);
+        final Bundle arguments = getArguments();
+        if (arguments != null) {
+            final Date date = (Date) arguments.getSerializable(AlarmReceiver.SCROLL_TO_DATE);
+            if (date != null) {
+                scrollToDate(date);
             }
         }
     }
@@ -156,5 +186,11 @@ public class AltarServiceListFragment extends Fragment implements SharedPreferen
                     PreferenceManager.getDefaultSharedPreferences(context);
             mShowAll = prefs.getBoolean(SettingsActivity.PREF_SHOW_ALL_DUTY, false);
         }
+    }
+
+    private void scrollToDate(final Date date) {
+        final int i = Collections.binarySearch(mAltarServices, AltarService.dateOnlyService(date), AltarService.DATE_COMPARATOR);
+        Timber.d("Search got index %d", i);
+        mAltarServiceRecyclerView.post(() -> mAltarServiceRecyclerView.scrollToPosition(i));
     }
 }
