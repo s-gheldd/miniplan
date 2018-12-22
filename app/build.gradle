@@ -24,6 +24,12 @@ android {
     dataBinding {
         enabled = true
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -43,6 +49,11 @@ dependencies {
 
     testImplementation group: 'android.arch.persistence.room', name: 'testing', version: '1.1.1'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'org.robolectric', name: 'robolectric', version: '4.1'
+    testImplementation group: 'androidx.test', name: 'core', version: '1.1.0'
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+
     androidTestImplementation group: 'com.android.support.test', name: 'runner', version: '1.0.2'
     androidTestImplementation group: 'com.android.support.test.espresso', name: 'espresso-core', version: '3.0.2'
 
