@@ -17,33 +17,34 @@
         <item>168</item>
     </string-array>
     <string-array name="alarm_grace_options">
-        <item>5 Minuten</item>
-        <item>10 Minuten</item>
-        <item>15 Minuten</item>
-        <item>20 Minuten</item>
-        <item>25 Minuten</item>
         <item>30 Minuten</item>
-        <item>35 Minuten</item>
-        <item>40 Minuten</item>
-        <item>45 Minuten</item>
         <item>60 Minuten</item>
-        <item>1 Stunde 15 Minuten</item>
-        <item>1 Stunde 30 Minuten</item>
         <item>2 Stunden</item>
+        <item>3 Stunden</item>
+        <item>6 Stunden</item>
+        <item>12 Stunden</item>
+        <item>24 Stunden</item>
+        <item>48 Stunden</item>
+        <item>3 Tage</item>
+        <item>4 Tage</item>
+        <item>5 Tage</item>
+        <item>6 Tage</item>
+        <item>7 Tage</item>
     </string-array>
     <string-array name="alarm_grace_values">
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>25</item>
         <item>30</item>
-        <item>35</item>
-        <item>40</item>
-        <item>45</item>
         <item>60</item>
-        <item>75</item>
-        <item>90</item>
         <item>120</item>
+        <item>180</item>
+        <item>240</item>
+        <item>360</item>
+        <item>720</item>
+        <item>1440</item>
+        <item>2880</item>
+        <item>4320</item>
+        <item>5760</item>
+        <item>7200</item>
+        <item>8640</item>
+        <item>10080</item>
     </string-array>
 </resources>
