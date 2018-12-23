@@ -1,16 +1,16 @@
 package de.sauroter.miniplan.model;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.data.AltarServicedatabaseAccessor;
 import de.sauroter.miniplan.data.Event;

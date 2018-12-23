@@ -6,9 +6,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 
+import androidx.appcompat.app.AppCompatActivity;
 import de.sauroter.miniplan.model.AltarServiceUpdateJobService;
 
 import static de.sauroter.miniplan.activity.SettingsActivity.PREF_ENABLE_ALARM;

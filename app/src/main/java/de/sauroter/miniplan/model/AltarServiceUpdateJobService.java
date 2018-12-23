@@ -5,10 +5,10 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.miniplan.R;
 import de.sauroter.miniplan.task.FetchMiniplanDataAsyncTask;

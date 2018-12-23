@@ -1,8 +1,9 @@
 package de.sauroter.miniplan.data;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
+import androidx.room.Room;
 
 public class AltarServicedatabaseAccessor {
     private static final String ALTAR_SERVICE_DB_TAG = "ALTAR_SERVICE_DB_TAG";

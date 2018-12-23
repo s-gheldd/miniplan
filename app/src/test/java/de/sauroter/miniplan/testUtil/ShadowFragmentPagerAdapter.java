@@ -1,8 +1,5 @@
 package de.sauroter.miniplan.testUtil;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.view.ViewGroup;
 
 import org.mockito.internal.util.reflection.Fields;
@@ -12,6 +9,9 @@ import org.robolectric.annotation.Implements;
 import org.robolectric.annotation.RealObject;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 
 import static org.robolectric.shadow.api.Shadow.directlyOn;
 

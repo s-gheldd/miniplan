@@ -12,11 +12,11 @@
             type="de.sauroter.miniplan.data.AltarService" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/text_margin">
@@ -31,7 +31,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Datum"
+                        android:text="@string/detail_date"
                         android:textAppearance="?android:textAppearanceLarge"
                         android:textColor="@color/primaryDarkColor"
                         android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Ort"
+                        android:text="@string/detail_place"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -61,7 +61,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Sonstiges"
+                        android:text="@string/detail_additional_information"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -75,7 +75,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Lektor"
+                        android:text="@string/detail_lector"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -89,7 +89,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Altar"
+                        android:text="@string/detail_altar"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -103,7 +103,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Altar"
+                        android:text="@string/detail_altar"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -117,7 +117,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Leuchter"
+                        android:text="@string/detail_light"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -131,7 +131,7 @@
                 <TableRow>
 
                     <TextView
-                        android:text="Leuchter"
+                        android:text="@string/detail_light"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textStyle="normal" />
 
@@ -144,14 +144,14 @@
 
             </TableLayout>
 
-            <android.support.v7.widget.AppCompatImageButton
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/detail_done_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

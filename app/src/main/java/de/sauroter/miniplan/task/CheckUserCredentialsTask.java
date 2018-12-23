@@ -3,8 +3,6 @@ package de.sauroter.miniplan.task;
 import android.app.Application;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +12,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import de.sauroter.miniplan.miniplan.R;
 import timber.log.Timber;
 

@@ -72,4 +72,12 @@
     <string name="debug_prompt_delay">Verzögerung</string>
     <string name="debug_prompt_grace">Grace</string>
     <string name="debug_action_clear">Clear DB</string>
+
+    <!-- Strings related to detail activity -->
+    <string name="detail_date">Datum</string>
+    <string name="detail_place">Ort</string>
+    <string name="detail_additional_information">Sonstiges</string>
+    <string name="detail_lector">Lektor</string>
+    <string name="detail_altar">Altar</string>
+    <string name="detail_light">Leuchter</string>
 </resources>

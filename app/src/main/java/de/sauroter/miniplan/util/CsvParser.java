@@ -1,8 +1,5 @@
 package de.sauroter.miniplan.util;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import de.sauroter.miniplan.data.AltarService;
 import de.sauroter.miniplan.data.Event;
 import timber.log.Timber;

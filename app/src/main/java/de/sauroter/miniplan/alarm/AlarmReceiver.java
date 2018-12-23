@@ -12,10 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 
 import java.text.DateFormat;
@@ -25,6 +21,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import de.sauroter.miniplan.activity.MiniplanActivity;
 import de.sauroter.miniplan.activity.SettingsActivity;
 import de.sauroter.miniplan.miniplan.BuildConfig;

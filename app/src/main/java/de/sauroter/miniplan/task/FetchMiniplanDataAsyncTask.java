@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import androidx.annotation.NonNull;
 import de.sauroter.miniplan.activity.SettingsActivity;
 import de.sauroter.miniplan.alarm.AlarmReceiver;
 import de.sauroter.miniplan.data.AltarService;

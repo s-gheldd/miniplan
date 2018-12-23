@@ -22,6 +22,7 @@ allprojects {
 
     project.ext {
         appCompatVersion = '27.1.1'
+        butterKnifeVersion = '9.0.0-rc3'
     }
 }
 

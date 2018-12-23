@@ -1,9 +1,8 @@
 package de.sauroter.miniplan.testUtil;
 
-import android.support.annotation.NonNull;
-
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import de.sauroter.miniplan.data.AltarService;
 
 public class TestAltarService extends AltarService {

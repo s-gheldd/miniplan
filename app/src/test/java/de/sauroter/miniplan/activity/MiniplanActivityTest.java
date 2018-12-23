@@ -3,7 +3,6 @@ package de.sauroter.miniplan.activity;
 import android.app.Application;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +18,7 @@ import org.robolectric.annotation.Config;
 
 import java.util.Date;
 
+import androidx.room.Room;
 import de.sauroter.miniplan.data.AltarServiceDatabase;
 import de.sauroter.miniplan.data.AltarServicedatabaseAccessor;
 import de.sauroter.miniplan.model.AltarServiceUpdateJobService;
