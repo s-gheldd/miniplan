@@ -37,4 +37,10 @@
         android:key="PREF_DEBUG_MODE_ENABLED"
         android:summary="Enable/Disable debug mode"
         android:title="Debug Mode" />
+
+    <EditTextPreference
+        android:defaultValue="https://majo-minis.de/App/Handy"
+        android:key="PREF_SERVER_ENDPOINT"
+        android:summary="Die Miniplan Server URL für Android Apps"
+        android:title="Server Endpoint" />
 </PreferenceScreen>

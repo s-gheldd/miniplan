@@ -26,6 +26,7 @@ public class SettingsActivity extends ManageMiniplanUpdateJobActivity implements
     public static final String PREF_ALARM_GRACE = "PREF_ALARM_GRACE";
     public static final String PREF_SHOW_ALL_DUTY = "PREF_SHOW_ALL_DUTY";
     public static final String PREF_DEBUG_MODE_ENABLED = "PREF_DEBUG_MODE_ENABLED";
+    public static final String PREF_SERVER_ENDPOINT = "PREF_SERVER_ENDPOINT";
     private Toolbar mToolbar;
     private int mDebugClicks = 0;
 

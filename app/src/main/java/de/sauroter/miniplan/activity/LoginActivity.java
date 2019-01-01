@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,6 +69,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(final View v) {
         login();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.login_menu, menu);
+        final MenuItem item = menu.findItem(R.id.menu_item_server_endpoint);
+
+        final View actionView = item.getActionView();
+        final EditText mServerEndpointEditText = actionView.findViewById(R.id.edit_text_login_menu_server_endpoint);
+
+        mServerEndpointEditText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.PREF_SERVER_ENDPOINT, "adadad"));
+        return true;
     }
 
     @SuppressLint("StaticFieldLeak")
