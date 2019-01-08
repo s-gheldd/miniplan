@@ -34,10 +34,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText mPasswordEditText;
 
     @BindView(R.id.login_button_connect)
-    Button _connect;
+    Button mConnectButton;
 
     @BindView(R.id.login_progress_bar)
-    ProgressBar _progress_bar;
+    ProgressBar mProgressBar;
 
     @BindString(R.string.tag_login_successful_completed)
     String tagLoginSuccessfulCompleted;
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
 
-        _connect.setOnClickListener(this);
+        mConnectButton.setOnClickListener(this);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
         if (!isConnected) {
-            _connect.setError(activityContext.getString(R.string.error_network));
+            mConnectButton.setError(activityContext.getString(R.string.error_network));
             Toast.makeText(activityContext, R.string.error_network, Toast.LENGTH_LONG).show();
 
             return;
@@ -118,13 +118,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                _progress_bar.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             protected void onPostExecute(final Boolean success) {
                 super.onPostExecute(success);
-                _progress_bar.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
                 final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 final boolean wasAuthenticated = preferences.getBoolean(tagLoginSuccessfulCompleted, false);
 

@@ -32,15 +32,15 @@
         android:summary="Zeit zwischen Benachrichtigung und Gottesdienstbeginn"
         android:title="@string/alarm_grace_period" />
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="PREF_DEBUG_MODE_ENABLED"
-        android:summary="Enable/Disable debug mode"
-        android:title="Debug Mode" />
-
     <EditTextPreference
         android:defaultValue="https://majo-minis.de/App/Handy"
         android:key="PREF_SERVER_ENDPOINT"
         android:summary="Die Miniplan Server URL für Android Apps"
         android:title="Server Endpoint" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="PREF_DEBUG_MODE_ENABLED"
+        android:summary="Enable/Disable debug mode"
+        android:title="Debug Mode" />
 </PreferenceScreen>
